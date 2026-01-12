@@ -171,7 +171,7 @@ if (SERVER_URL) {
         fetch(`${SERVER_URL}/api/health`)
             .then(() => console.log(`[Keep-Alive] Ping successful`))
             .catch(err => console.error(`[Keep-Alive] Ping failed:`, err.message));
-    }, 8 * 60 * 1000); // Ping every 14 minutes
+    }, 3 * 60 * 1000); // Ping every 14 minutes
 }
 
 app.listen(PORT, () => {
