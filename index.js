@@ -159,6 +159,21 @@ app.get('/api/guests', async (req, res) => {
     }
 });
 
+// 6. Keep-Alive / Health Check
+app.get('/api/health', (req, res) => {
+    res.status(200).send('OK');
+});
+
+// Self-Ping Mechanism (Prevent Render Free Tier Sleep)
+const SERVER_URL = process.env.SERVER_URL;
+if (SERVER_URL) {
+    setInterval(() => {
+        fetch(`${SERVER_URL}/api/health`)
+            .then(() => console.log(`[Keep-Alive] Ping successful`))
+            .catch(err => console.error(`[Keep-Alive] Ping failed:`, err.message));
+    }, 8 * 60 * 1000); // Ping every 14 minutes
+}
+
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
